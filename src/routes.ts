@@ -1,4 +1,4 @@
-import { Application } from 'express';
+import { Application, Request, Response } from 'express';
 
 export const createRoutes = (app: Application) => {
   // http://expressjs.com/en/starter/basic-routing.html
@@ -6,8 +6,10 @@ export const createRoutes = (app: Application) => {
     res.sendFile(__dirname + '/views/index.html');
   });
 
-  // your first API endpoint...
-  app.get('/api/hello', function (req, res) {
-    res.json({ greeting: 'hello API' });
+  app.get('/api/whoami', function (req: Request, res: Response) {
+    const ipaddress = req.ip;
+    const language = req.headers['accept-language'];
+    const software = req.headers['user-agent'];
+    res.json({ ipaddress, language, software });
   });
 };
